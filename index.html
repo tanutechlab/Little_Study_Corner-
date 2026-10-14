@@ -1,0 +1,1019 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Study Corner | Student Dashboard</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+  --cream: #faf7f0;
+  --card: #fffdf9;
+  --sage: #a8b99b;
+  --sage-dark: #52674e;
+  --pink: #efd7d3;
+  --brown: #6b5549;
+  --text: #413d36;
+  --muted: #958b80;
+  --line: #eee6dc;
+  --lavender: #e8e2f2;
+  --yellow: #f4e7bc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #f0eee4;
+  padding: 30px 20px;
+  border-right: 1px solid var(--line);
+}
+
+.logo {
+  font: 700 25px 'Playfair Display', serif;
+  color: var(--sage-dark);
+  margin-bottom: 8px;
+}
+
+.logo span { color: #bc8980; }
+
+.tagline {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 35px;
+}
+
+.nav-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin: 24px 10px 12px;
+}
+
+.nav-link {
+  display: block;
+  text-decoration: none;
+  color: #777166;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.nav-link:hover, .nav-link.active {
+  background: #dfe6d7;
+  color: var(--sage-dark);
+}
+
+.sidebar-note {
+  background: #e4e8db;
+  padding: 17px;
+  border-radius: 16px;
+  margin-top: 42px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.sidebar-note strong {
+  display: block;
+  font: 600 17px 'Playfair Display', serif;
+  margin-bottom: 6px;
+}
+
+main {
+  padding: 30px 34px 45px;
+  max-width: 1450px;
+  width: 100%;
+  margin: auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.date {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+h1 { font-size: clamp(25px, 3vw, 34px); }
+
+.greeting p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.clock {
+  text-align: right;
+  color: var(--sage-dark);
+  font: 600 23px 'Playfair Display', serif;
+}
+
+.clock small {
+  display: block;
+  font: 12px 'DM Sans', sans-serif;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.hero {
+  background: linear-gradient(115deg, #dfe7d7, #f1e4d9 90%);
+  padding: 27px;
+  border-radius: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 23px;
+}
+
+.hero .eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--sage-dark);
+  margin-bottom: 11px;
+}
+
+.hero h2 { font-size: 27px; margin-bottom: 9px; }
+
+.hero p {
+  color: #716d61;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.hero-art {
+  font-size: 60px;
+  padding: 0 12px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat, .panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  padding: 20px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stat-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-size: 21px;
+  background: #e7eddf;
+}
+
+.stat:nth-child(2) .stat-icon { background: #f5e5df; }
+.stat:nth-child(3) .stat-icon { background: #eee7f4; }
+
+.stat strong {
+  display: block;
+  font-size: 23px;
+  font-weight: 600;
+}
+
+.stat p { color: var(--muted); font-size: 11px; margin-top: 4px; }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(290px, .85fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.panel { margin-bottom: 20px; }
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.panel-heading h2 { font-size: 20px; }
+
+.panel-heading p {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.small-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 12px;
+  background: #e4eadc;
+  color: var(--sage-dark);
+  font-size: 12px;
+}
+
+.small-btn:hover { background: #d4e0cb; }
+
+.progress-track {
+  height: 7px;
+  background: #f0ece5;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 10px 0 19px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--sage);
+  border-radius: 20px;
+  transition: width .3s;
+}
+
+.progress-caption {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.chapter-list, .task-list {
+  list-style: none;
+}
+
+.chapter-item, .task-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 0;
+  border-bottom: 1px solid #f2ede6;
+}
+
+.chapter-item:last-child, .task-item:last-child { border-bottom: 0; }
+
+.chapter-item input[type="checkbox"],
+.task-item input[type="checkbox"] {
+  accent-color: #819977;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.item-content { flex: 1; min-width: 0; }
+
+.item-title {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.item-meta {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.done .item-title {
+  text-decoration: line-through;
+  color: #a49b90;
+}
+
+.delete-btn {
+  border: 0;
+  background: transparent;
+  color: #b6a79a;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.delete-btn:hover { color: #ba766b; }
+
+.add-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 17px;
+}
+
+.field {
+  min-width: 0;
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  background: #fffefa;
+  border-radius: 10px;
+  outline: none;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.field:focus { border-color: var(--sage); }
+
+.add-form .field { flex: 1; }
+
+select.field { cursor: pointer; }
+
+.empty {
+  padding: 18px 0;
+  font-size: 12px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.timer-panel {
+  background: #e7ebdf;
+  text-align: center;
+}
+
+.timer-panel .panel-heading { text-align: left; }
+
+.timer-modes {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin: 16px 0 22px;
+}
+
+.mode-btn {
+  border: 0;
+  background: rgba(255,255,255,.55);
+  color: #67725d;
+  padding: 9px 13px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+.mode-btn.active {
+  background: #fffdf9;
+  color: var(--sage-dark);
+  box-shadow: 0 2px 7px #b4bca94d;
+}
+
+.timer {
+  font: 600 clamp(43px, 5vw, 61px) 'Playfair Display', serif;
+  color: #4d6148;
+  letter-spacing: 2px;
+  margin: 14px 0 7px;
+}
+
+.timer-label { font-size: 12px; color: #75806d; }
+
+.timer-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 22px 0 13px;
+}
+
+.timer-btn {
+  border: 0;
+  background: #718768;
+  color: white;
+  border-radius: 12px;
+  padding: 12px 22px;
+  font-size: 12px;
+}
+
+.timer-btn.secondary {
+  background: rgba(255,255,255,.7);
+  color: var(--sage-dark);
+}
+
+.sessions {
+  font-size: 11px;
+  color: #78836f;
+  margin-top: 12px;
+}
+
+.quote-panel {
+  background: #f5e8e2;
+  border: 0;
+}
+
+.quote-panel h2 { font-size: 19px; margin-bottom: 11px; }
+
+.quote {
+  font: italic 16px/1.7 'Playfair Display', serif;
+  color: #80675e;
+}
+
+.quote-author {
+  color: #a18478;
+  font-size: 11px;
+  margin-top: 10px;
+}
+
+.subject-badge {
+  display: inline-block;
+  border-radius: 7px;
+  padding: 4px 7px;
+  font-size: 10px;
+  background: #eee8f3;
+  color: #85709b;
+  margin-top: 5px;
+}
+
+.footer {
+  text-align: center;
+  color: #a39a8e;
+  font-size: 11px;
+  padding: 12px;
+}
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { padding: 15px 20px; }
+  .tagline, .nav-label, .sidebar-note { display: none; }
+  .logo { margin-bottom: 12px; }
+  .sidebar nav { display: flex; gap: 6px; overflow-x: auto; }
+  .nav-link { white-space: nowrap; margin: 0; padding: 10px; }
+  main { padding: 24px 18px; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .stats { grid-template-columns: 1fr; gap: 10px; }
+  .stat { padding: 14px; }
+  .hero { padding: 21px; }
+  .hero-art { font-size: 43px; }
+  .hero h2 { font-size: 22px; }
+  .clock { font-size: 18px; }
+  .topbar { align-items: flex-start; }
+  .add-form { flex-wrap: wrap; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="logo">little<span>study</span> ☁</div>
+    <p class="tagline">your cosy corner to grow</p>
+
+    <nav>
+      <a href="#home" class="nav-link active">☁ Home</a>
+      <a href="#chapters" class="nav-link">📚 Chapters</a>
+      <a href="#tasks" class="nav-link">✿ My tasks</a>
+      <a href="#timer-section" class="nav-link">☕ Study timer</a>
+    </nav>
+
+    <div class="sidebar-note">
+      <strong>Dear student, 🌷</strong>
+      You don't need to do everything today. Just take one small step at a time.
+    </div>
+  </aside>
+
+  <main id="home">
+    <header class="topbar">
+      <div class="greeting">
+        <div class="date" id="today"></div>
+        <h1>Your little study space 🌷</h1>
+        <p>A gentle reminder: you're making progress, even on slow days.</p>
+      </div>
+      <div class="clock">
+        <span id="clock">00:00</span>
+        <small>your local time</small>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">✦ YOUR DAILY REMINDER</div>
+        <h2>Slow mornings, big dreams.</h2>
+        <p>Make some tea, open your books, and begin.<br>
+        Your future self will thank you for today.</p>
+      </div>
+      <div class="hero-art">☕📖</div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-icon">📖</div>
+        <div>
+          <strong id="chapter-stat">0/0</strong>
+          <p>Chapters completed</p>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">🌼</div>
+        <div>
+          <strong id="task-stat">0/0</strong>
+          <p>Tasks completed</p>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">⏳</div>
+        <div>
+          <strong id="session-stat">0</strong>
+          <p>Study sessions today</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="dashboard-grid">
+      <div>
+        <section class="panel" id="chapters">
+          <div class="panel-heading">
+            <div>
+              <h2>My chapters 📚</h2>
+              <p>One chapter at a time.</p>
+            </div>
+            <button class="small-btn" id="clear-chapters">Clear done</button>
+          </div>
+
+          <div class="progress-caption">
+            <span>Overall progress</span>
+            <span id="progress-label">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+
+          <ul class="chapter-list" id="chapter-list"></ul>
+
+          <form class="add-form" id="chapter-form">
+            <input class="field" id="chapter-name" placeholder="Add a chapter..." required maxlength="100">
+            <select class="field" id="chapter-subject" aria-label="Chapter subject" style="max-width:130px">
+              <option>Physics</option>
+              <option>Chemistry</option>
+              <option>Biology</option>
+              <option>English</option>
+              <option>Maths</option>
+              <option>Computer</option>
+              <option>Other</option>
+            </select>
+            <button class="small-btn" type="submit">+ Add</button>
+          </form>
+        </section>
+
+        <section class="panel" id="tasks">
+          <div class="panel-heading">
+            <div>
+              <h2>Little to-do list ✿</h2>
+              <p>Small steps count, too.</p>
+            </div>
+            <button class="small-btn" id="clear-tasks">Clear done</button>
+          </div>
+
+          <ul class="task-list" id="task-list"></ul>
+
+          <form class="add-form" id="task-form">
+            <input class="field" id="task-name" placeholder="What needs doing?" required maxlength="120">
+            <button class="small-btn" type="submit">+ Add</button>
+          </form>
+        </section>
+      </div>
+
+      <div>
+        <section class="panel timer-panel" id="timer-section">
+          <div class="panel-heading">
+            <div>
+              <h2>Cosy study timer ☕</h2>
+              <p>Focus gently, rest without guilt.</p>
+            </div>
+          </div>
+
+          <div class="timer-modes">
+            <button class="mode-btn active" data-minutes="25" data-mode="focus">Focus</button>
+            <button class="mode-btn" data-minutes="5" data-mode="short">Short break</button>
+            <button class="mode-btn" data-minutes="15" data-mode="long">Long break</button>
+          </div>
+
+          <div class="timer" id="timer">25:00</div>
+          <div class="timer-label" id="timer-label">Time to focus on you 🌱</div>
+
+          <div class="timer-actions">
+            <button class="timer-btn" id="start-btn">▶ Start</button>
+            <button class="timer-btn secondary" id="reset-btn">↺ Reset</button>
+          </div>
+
+          <div class="sessions">Today's focus sessions: <strong id="sessions">0</strong> 🌷</div>
+        </section>
+
+        <section class="panel quote-panel">
+          <h2>A little note for you 💌</h2>
+          <p class="quote" id="quote">"You are allowed to grow at your own pace."</p>
+          <p class="quote-author" id="quote-author">— a reminder to yourself</p>
+          <button class="small-btn" id="new-quote" style="margin-top:16px">Another little note ↗</button>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Today's intention 🌱</h2>
+              <p>What matters most today?</p>
+            </div>
+          </div>
+          <form id="intention-form">
+            <input class="field" id="intention" maxlength="160"
+              placeholder="e.g. Revise one Biology chapter">
+            <button class="small-btn" type="submit" style="margin-top:10px">Save intention</button>
+          </form>
+          <p id="intention-message" style="font-size:12px;color:var(--sage-dark);margin-top:12px"></p>
+        </section>
+      </div>
+    </div>
+
+    <footer class="footer">
+      Made with ♡, coffee, and little dreams. Keep going, you've got this!
+    </footer>
+  </main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const STORAGE_KEY = "littleStudyCorner_v1";
+const TODAY_KEY = new Date().toLocaleDateString("en-CA");
+
+function freshData() {
+  return {
+    chapters: [
+      { id: 1, name: "Units and Measurements", subject: "Physics", done: false },
+      { id: 2, name: "Motion in a Straight Line", subject: "Physics", done: false },
+      { id: 3, name: "The Living World", subject: "Biology", done: false }
+    ],
+    tasks: [
+      { id: 4, name: "Revise today's class notes", done: false },
+      { id: 5, name: "Complete homework", done: false }
+    ],
+    intention: "",
+    day: TODAY_KEY,
+    sessions: 0
+  };
+}
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return freshData();
+
+    const parsed = JSON.parse(saved);
+    if (!Array.isArray(parsed.chapters) || !Array.isArray(parsed.tasks)) {
+      return freshData();
+    }
+
+    if (parsed.day !== TODAY_KEY) {
+      parsed.sessions = 0;
+      parsed.day = TODAY_KEY;
+    }
+
+    return {
+      ...freshData(),
+      ...parsed,
+      sessions: Number.isFinite(parsed.sessions) ? parsed.sessions : 0
+    };
+  } catch {
+    return freshData();
+  }
+}
+
+let data = loadData();
+let nextId = Math.max(
+  0,
+  ...data.chapters.map(x => x.id),
+  ...data.tasks.map(x => x.id)
+) + 1;
+
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    console.warn("Progress could not be saved in this browser.");
+  }
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function renderChapters() {
+  const list = $("chapter-list");
+
+  if (!data.chapters.length) {
+    list.innerHTML = '<li class="empty">No chapters yet. Add your first one 🌱</li>';
+  } else {
+    list.innerHTML = data.chapters.map(ch => `
+      <li class="chapter-item ${ch.done ? "done" : ""}">
+        <input type="checkbox" data-type="chapter" data-id="${ch.id}"
+          aria-label="Mark ${escapeHTML(ch.name)} complete" ${ch.done ? "checked" : ""}>
+        <div class="item-content">
+          <div class="item-title">${escapeHTML(ch.name)}</div>
+          <div class="subject-badge">${escapeHTML(ch.subject)}</div>
+        </div>
+        <button class="delete-btn" data-delete="chapter" data-id="${ch.id}"
+          aria-label="Delete chapter">×</button>
+      </li>
+    `).join("");
+  }
+
+  const done = data.chapters.filter(ch => ch.done).length;
+  const total = data.chapters.length;
+  const percent = total ? Math.round(done / total * 100) : 0;
+
+  $("chapter-stat").textContent = `${done}/${total}`;
+  $("progress-label").textContent = `${percent}%`;
+  $("progress-fill").style.width = `${percent}%`;
+}
+
+function renderTasks() {
+  const list = $("task-list");
+
+  if (!data.tasks.length) {
+    list.innerHTML = '<li class="empty">Your to-do list is clear. Lovely! ☁</li>';
+  } else {
+    list.innerHTML = data.tasks.map(task => `
+      <li class="task-item ${task.done ? "done" : ""}">
+        <input type="checkbox" data-type="task" data-id="${task.id}"
+          aria-label="Mark ${escapeHTML(task.name)} complete" ${task.done ? "checked" : ""}>
+        <div class="item-content">
+          <div class="item-title">${escapeHTML(task.name)}</div>
+          <div class="item-meta">${task.done ? "Completed ✓" : "A little step at a time"}</div>
+        </div>
+        <button class="delete-btn" data-delete="task" data-id="${task.id}"
+          aria-label="Delete task">×</button>
+      </li>
+    `).join("");
+  }
+
+  const done = data.tasks.filter(t => t.done).length;
+  $("task-stat").textContent = `${done}/${data.tasks.length}`;
+}
+
+function renderAll() {
+  renderChapters();
+  renderTasks();
+  $("session-stat").textContent = data.sessions;
+  $("sessions").textContent = data.sessions;
+  $("intention").value = data.intention || "";
+}
+
+$("chapter-form").addEventListener("submit", event => {
+  event.preventDefault();
+  const name = $("chapter-name").value.trim();
+  if (!name) return;
+
+  data.chapters.push({
+    id: nextId++,
+    name,
+    subject: $("chapter-subject").value,
+    done: false
+  });
+
+  saveData();
+  renderChapters();
+  $("chapter-name").value = "";
+});
+
+$("task-form").addEventListener("submit", event => {
+  event.preventDefault();
+  const name = $("task-name").value.trim();
+  if (!name) return;
+
+  data.tasks.push({ id: nextId++, name, done: false });
+  saveData();
+  renderTasks();
+  $("task-name").value = "";
+});
+
+document.addEventListener("change", event => {
+  const el = event.target;
+  if (el.type !== "checkbox" || !el.dataset.type) return;
+
+  const collection = el.dataset.type === "chapter" ? data.chapters : data.tasks;
+  const item = collection.find(x => x.id === Number(el.dataset.id));
+
+  if (item) {
+    item.done = el.checked;
+    saveData();
+    renderAll();
+  }
+});
+
+document.addEventListener("click", event => {
+  const btn = event.target.closest("[data-delete]");
+  if (!btn) return;
+
+  const key = btn.dataset.delete === "chapter" ? "chapters" : "tasks";
+  data[key] = data[key].filter(x => x.id !== Number(btn.dataset.id));
+  saveData();
+  renderAll();
+});
+
+$("clear-chapters").addEventListener("click", () => {
+  data.chapters = data.chapters.filter(ch => !ch.done);
+  saveData();
+  renderAll();
+});
+
+$("clear-tasks").addEventListener("click", () => {
+  data.tasks = data.tasks.filter(task => !task.done);
+  saveData();
+  renderAll();
+});
+
+$("intention-form").addEventListener("submit", event => {
+  event.preventDefault();
+  data.intention = $("intention").value.trim();
+  saveData();
+  $("intention-message").textContent = data.intention
+    ? "Your intention is saved. You've got this! 🌷"
+    : "Add an intention whenever you're ready.";
+});
+
+// Live clock and date
+function updateClock() {
+  const now = new Date();
+
+  $("clock").textContent = now.toLocaleTimeString([], {
+    hour: "2-digit", minute: "2-digit"
+  });
+
+  $("today").textContent = now.toLocaleDateString([], {
+    weekday: "long", month: "long", day: "numeric", year: "numeric"
+  });
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+// Pomodoro timer
+let selectedMode = "focus";
+let duration = 25 * 60;
+let remaining = duration;
+let running = false;
+let deadline = null;
+let interval = null;
+
+const modes = {
+  focus: { minutes: 25, label: "Time to focus on you 🌱" },
+  short: { minutes: 5, label: "Take a little breather 🌷" },
+  long: { minutes: 15, label: "Rest. You've earned it ☁" }
+};
+
+function showTimer() {
+  const mins = Math.floor(remaining / 60);
+  const secs = remaining % 60;
+  $("timer").textContent =
+    `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+
+  $("start-btn").textContent = running ? "Ⅱ Pause" : "▶ Start";
+}
+
+function stopTimer() {
+  running = false;
+  clearInterval(interval);
+  interval = null;
+}
+
+function tick() {
+  remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+
+  if (remaining <= 0) {
+    const completedMode = selectedMode;
+    stopTimer();
+
+    if (completedMode === "focus") {
+      data.sessions++;
+      saveData();
+      $("session-stat").textContent = data.sessions;
+      $("sessions").textContent = data.sessions;
+      $("timer-label").textContent = "Beautiful work! Time to rest 🌷";
+    } else {
+      $("timer-label").textContent = "Break complete. Ready when you are ☕";
+    }
+
+    showTimer();
+    alert(completedMode === "focus"
+      ? "Focus session complete! Take a well-deserved break 🌷"
+      : "Your break is over. Ready for another session?");
+    return;
+  }
+
+  showTimer();
+}
+
+function startTimer() {
+  if (running) {
+    // Pause while preserving the remaining time.
+    remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+    stopTimer();
+    showTimer();
+    return;
+  }
+
+  if (remaining <= 0) remaining = duration;
+
+  running = true;
+  deadline = Date.now() + remaining * 1000;
+  $("timer-label").textContent = modes[selectedMode].label;
+
+  tick();
+  if (running) interval = setInterval(tick, 250);
+  showTimer();
+}
+
+function resetTimer() {
+  stopTimer();
+  remaining = duration;
+  $("timer-label").textContent = modes[selectedMode].label;
+  showTimer();
+}
+
+document.querySelectorAll(".mode-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    stopTimer();
+    selectedMode = btn.dataset.mode;
+    duration = Number(btn.dataset.minutes) * 60;
+    remaining = duration;
+
+    document.querySelectorAll(".mode-btn").forEach(b => {
+      b.classList.toggle("active", b === btn);
+    });
+
+    $("timer-label").textContent = modes[selectedMode].label;
+    showTimer();
+  });
+});
+
+$("start-btn").addEventListener("click", startTimer);
+$("reset-btn").addEventListener("click", resetTimer);
+
+// Motivational notes
+const quotes = [
+  ["You are allowed to grow at your own pace.", "a reminder to yourself"],
+  ["Little by little, a little becomes a lot.", "a gentle reminder"],
+  ["Progress matters more than perfection.", "your study corner"],
+  ["You don't have to see the whole staircase. Just take the first step.", "a little encouragement"],
+  ["Be proud of how far you've come.", "your future self"],
+  ["Rest is part of the process, too.", "your gentle reminder"]
+];
+
+$("new-quote").addEventListener("click", () => {
+  const current = $("quote").textContent;
+  let available = quotes.filter(q => `"${q[0]}"` !== current);
+  if (!available.length) available = quotes;
+
+  const q = available[Math.floor(Math.random() * available.length)];
+  $("quote").textContent = `"${q[0]}"`;
+  $("quote-author").textContent = `— ${q[1]}`;
+});
+
+renderAll();
+showTimer();
+</script>
+</body>
+</html>
